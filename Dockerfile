@@ -1,4 +1,4 @@
-from golang:alpine as builder
+FROM golang:alpine as builder
 
 RUN apk --no-cache add git curl
 
@@ -11,7 +11,7 @@ RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh && 
 
 RUN go get -u github.com/improbable-eng/grpc-web/go/grpcwebproxy
 
-from alpine
+FROM alpine
 
 RUN apk --no-cache add ca-certificates
 
@@ -21,4 +21,4 @@ COPY --from=builder /go/bin/grpcwebproxy .
 
 EXPOSE 8080 8443
 
-CMD ["/grpcwebproxy"]
+ENTRYPOINT ["/grpcwebproxy"]
